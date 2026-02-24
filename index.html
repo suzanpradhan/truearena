@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TrueArena</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        funnel: ['Funnel Display', 'sans-serif'],
+                    },
+                    animation: {
+                        'reveal': 'revealAnim 1.2s forwards cubic-bezier(0.16, 1, 0.3, 1)',
+                    },
+                    keyframes: {
+                        revealAnim: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { cursor: none; }
+    </style>
+</head>
+<body class="bg-[#050505] text-white font-funnel overflow-hidden m-0 selection:bg-white selection:text-black">
+
+    <!-- Custom Cursor Dot -->
+    <div id="cursor" class="fixed w-2 h-2 bg-white rounded-full pointer-events-none z-[9999] mix-blend-difference -translate-x-1/2 -translate-y-1/2 transition-transform duration-150 ease-out"></div>
+
+    <!-- Interactive Background -->
+    <div class="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_50%_50%,#0a0a0a_0%,#000_100%)]">
+        <div id="blob1" class="absolute w-[800px] h-[800px] rounded-full bg-[radial-gradient(circle,rgba(255,62,62,0.08)_0%,transparent_70%)] blur-[40px] pointer-events-none transition-transform duration-200 ease-out"></div>
+    </div>
+
+    <main class="flex flex-col items-center justify-center min-h-screen text-center space-y-16 select-none px-6">
+        
+        <div class="space-y-6">
+            <!-- Brand Name -->
+            <h1 class="text-[clamp(4rem,15vw,13rem)] font-extrabold tracking-[-0.02em] leading-[0.85] opacity-0 animate-reveal" style="animation-delay: 0.1s;">
+                TrueArena
+            </h1>
+            
+            <!-- Subtext -->
+            <p class="text-zinc-500 uppercase tracking-[0.6em] text-[10px] md:text-xs font-light opacity-0 animate-reveal" style="animation-delay: 0.3s;">
+                Coming Soon
+            </p>
+        </div>
+
+        <!-- Instagram Link -->
+        <div class="opacity-0 animate-reveal" style="animation-delay: 0.5s;">
+            <a href="https://instagram.com/truearena" target="_blank" 
+               class="group relative pb-1 text-xs font-semibold tracking-[0.2em] uppercase inline-flex items-center gap-2 border-b border-white/10 hover:border-white hover:opacity-70 transition-all duration-300">
+                Instagram
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
+                    <path d="M7 17L17 7M17 7H7M17 7V17"/>
+                </svg>
+            </a>
+        </div>
+
+    </main>
+
+    <script>
+        const blob = document.getElementById('blob1');
+        const cursor = document.getElementById('cursor');
+
+        document.addEventListener('mousemove', (e) => {
+            const { clientX: x, clientY: y } = e;
+            
+            // Move cursor
+            cursor.style.left = `${x}px`;
+            cursor.style.top = `${y}px`;
+
+            // Move background glow
+            blob.style.transform = `translate(${x - 400}px, ${y - 400}px)`;
+        });
+
+        // Click visual feedback
+        document.addEventListener('mousedown', () => {
+            cursor.classList.add('scale-[2.5]', 'opacity-50');
+        });
+        document.addEventListener('mouseup', () => {
+            cursor.classList.remove('scale-[2.5]', 'opacity-50');
+        });
+    </script>
+</body>
+</html>
